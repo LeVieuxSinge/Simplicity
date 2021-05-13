@@ -3,6 +3,7 @@ const {
     CleanWebpackPlugin
 } = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const PATHS = {
     src: path.resolve(__dirname, '../src/'),
@@ -10,84 +11,79 @@ const PATHS = {
 };
 
 const ENTRIES = {
-    simplicity: [PATHS.src],
+    simplicity: {
+        import: PATHS.src,
+    },
 };
 
-module.exports = [
-
-    // Minified
-    {
-        context: __dirname,
-        mode: 'production',
-        entry: ENTRIES,
-        output: {
-            path: PATHS.dist,
-            filename: '[name].min.js',
-            publicPath: '/',
-            library: {
-                type: 'umd', // universal module definition
-                name: 'Simplicity',
-            },
-        },
-        plugins: [
-            // new CleanWebpackPlugin(),
-            new VueLoaderPlugin(),
-        ],
-        module: {
-            rules: [{
-                test: /\.s[ac]ss$/i,
-                use: [
-                    // Creates `style` nodes from JS strings
-                    "style-loader",
-                    // Translates CSS into CommonJS
-                    "css-loader",
-                    // Compiles Sass to CSS
-                    "sass-loader",
-                ],
-            }, {
-                test: /\.vue$/,
-                loader: 'vue-loader'
-            }, ],
+module.exports = ['source-map'].map((devtool) => ({
+    mode: 'development',
+    entry: ENTRIES,
+    output: {
+        path: PATHS.dist,
+        filename: '[name].js',
+        library: {
+            type: 'umd', // Universal Module Definition
+            name: 'Simplicity',
+            umdNamedDefine: true,
         },
     },
-
-    // Non minified
-    {
-        context: __dirname,
-        mode: 'production',
-        entry: ENTRIES,
-        output: {
-            path: PATHS.dist,
-            filename: '[name].js',
-            publicPath: '/',
-            library: {
-                type: 'umd', // universal module definition
-                name: 'Simplicity',
-            },
+    externals: {
+        three: {
+            commonjs: 'three',
+            commonjs2: 'three',
+            amd: 'three',
+            root: 'THREE',
         },
-        plugins: [
-            new CleanWebpackPlugin(), // executed first so clean foler
-            new VueLoaderPlugin(),
-        ],
-        module: {
-            rules: [{
-                test: /\.s[ac]ss$/i,
-                use: [
-                    // Creates `style` nodes from JS strings
-                    "style-loader",
-                    // Translates CSS into CommonJS
-                    "css-loader",
-                    // Compiles Sass to CSS
-                    "sass-loader",
-                ],
-            }, {
-                test: /\.vue$/,
-                loader: 'vue-loader'
-            }, ],
+        'three-gltf-loader': {
+            commonjs: 'three-gltf-loader',
+            commonjs2: 'three-gltf-loader',
+            amd: 'three-gltf-loader',
+            root: 'GLTFLoader',
         },
-        optimization: {
-            minimize: false,
-        },
-    }
-
-]
+    },
+    devtool,
+    target: 'es2020',
+    plugins: [
+        new CleanWebpackPlugin(),
+        new VueLoaderPlugin(),
+        new MiniCssExtractPlugin(),
+    ],
+    module: {
+        rules: [{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    babelrc: false,
+                    presets: ["@babel/preset-env"],
+                }
+            }
+        }, {
+            test: /\.s[ac]ss$/i,
+            use: [
+                // Creates `style` nodes from JS strings
+                "style-loader",
+                // Translates CSS into CommonJS
+                "css-loader",
+                // Compiles Sass to CSS
+                "sass-loader",
+            ],
+        }, {
+            test: /\.vue$/,
+            loader: 'vue-loader'
+        }, {
+            test: /\.css$/,
+            use: [
+                // Creates `style` nodes from JS strings
+                "style-loader",
+                // Translates CSS into CommonJS
+                "css-loader",
+            ],
+        }, {
+            test: /\.css$/i,
+            use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        }, ],
+    },
+}));

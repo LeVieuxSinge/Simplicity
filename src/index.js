@@ -1,31 +1,16 @@
-// GLOBAL
-import * as THREE from 'three';
-
 // COMPONENTS
-import { Components } from './Components/Components';
+export { Components } from './Components/Components';
 
 // ENVIRONMENTS
-import { Environment } from './Environments/Environment';
-import { TargetEnvironment } from './Environments/TargetEnvironment';
+export { Environment } from './Environments/Environment';
+export { TargetEnvironment } from './Environments/TargetEnvironment';
 
 // MANAGERS
-import { AssetManager } from './Managers/AssetManager';
+export { AssetManager } from './Managers/AssetManager';
 
 // OBJECTS
-import { Light } from './Objects/Light';
-import { Mesh } from './Objects/Mesh';
+export { Geometry } from './Objects/Geometry';
+export { Light } from './Objects/Light';
 
 // UTILS
-import * as Utils from './Utils/Utils';
-
-// OUTPUT
-export {
-    Components,
-    Environment,
-    TargetEnvironment,
-    AssetManager,
-    Mesh,
-    Light,
-    THREE,
-    Utils,
-}
+export * as Utils from './Utils/Utils';

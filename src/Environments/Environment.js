@@ -3,7 +3,7 @@ import {
 } from 'three';
 import {
   Basics
-} from './Basics.js';
+} from './Basics';
 
 /* ============================================================= */
 
@@ -40,7 +40,7 @@ var DefaultRenderer = (function (canvas) {
 
 /* ============================================================= */
 
-class EnvironmentClass extends Basics {
+class Environment extends Basics {
 
   constructor(params) {
 
@@ -117,5 +117,5 @@ class EnvironmentClass extends Basics {
  * Exports
  */
 export {
-  EnvironmentClass as Environment,
+  Environment,
 }

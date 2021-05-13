@@ -13,7 +13,7 @@ import {
 
 var DefaultCamera = (function () {
 
-  return new PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 2000);
+  return new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 });
 
@@ -25,7 +25,7 @@ var DefaultScene = (function () {
 
 /* ============================================================= */
 
-class BasicsClass {
+class Basics {
 
   constructor(params) {
 
@@ -62,7 +62,7 @@ class BasicsClass {
 
   get scene() {
 
-    return this.scene;
+    return this._scene;
 
   }
 
@@ -88,5 +88,5 @@ class BasicsClass {
  * Exports
  */
 export {
-  BasicsClass as Basics,
+  Basics,
 }

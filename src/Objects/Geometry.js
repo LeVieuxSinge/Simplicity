@@ -5,6 +5,7 @@ import {
   Color,
   DoubleSide,
   FrontSide,
+  Mesh,
   MeshBasicMaterial,
   MeshPhongMaterial,
   MeshPhysicalMaterial,
@@ -26,7 +27,7 @@ import * as Utils from '../Utils/Utils';
 
 /* ============================================================= */
 
-class MeshClass {
+class Geometry {
 
   constructor(params) {
 
@@ -163,5 +164,5 @@ class MeshClass {
  * Exports
  */
 export {
-  MeshClass as Mesh,
+  Geometry,
 }

@@ -3,7 +3,7 @@ import {
 } from 'three';
 import {
   Basics
-} from './Basics.js';
+} from './Basics';
 
 /* ============================================================= */
 
@@ -25,7 +25,7 @@ var DefaultTargetRenderer = (function () {
 
 /* ============================================================= */
 
-class TargetEnvironmentClass extends Basics {
+class TargetEnvironment extends Basics {
 
   constructor(params) {
 
@@ -77,5 +77,5 @@ class TargetEnvironmentClass extends Basics {
  * Exports
  */
 export {
-  TargetEnvironmentClass as TargetEnvironment,
+  TargetEnvironment,
 }

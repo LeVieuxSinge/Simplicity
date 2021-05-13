@@ -1,7 +1,13 @@
 // COMPONENTS
-import TypewriterSex from './Typewriter/_.vue';
+import Composition from './Composition/_.vue';
+import Effect from './Effect/_.vue';
+import Framework from './Framework/_.vue';
+import TypeWriter from './Typewriter/_.vue';
 
 // OUTPUT
 export const Components = {
-    TypewriterSex,
+    Composition,
+    Effect,
+    Framework,
+    TypeWriter,
 }

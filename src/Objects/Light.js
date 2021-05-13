@@ -24,7 +24,7 @@ import * as Utils from '../Utils/Utils';
 
 /* ============================================================= */
 
-class LightClass {
+class Light {
 
   constructor(params) {
 
@@ -176,5 +176,5 @@ class LightClass {
  * Exports
  */
 export {
-  LightClass as Light,
+  Light,
 }

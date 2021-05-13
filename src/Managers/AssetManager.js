@@ -1,6 +1,4 @@
-import {
-  GLTFLoader
-} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import GLTFLoader from 'three-gltf-loader';
 
 /* ============================================================= */
 
@@ -10,19 +8,29 @@ var LoaderGTLF = new GLTFLoader();
 
 // -------- GENERAL METHODS -------- //
 
-var LoadGLTF = (function (asset) {
+var LoadGLTF = (function (asset, debug) {
 
   return new Promise(resolve => {
     try {
       // Load using GLTF loader
-      LoaderGTLF.load(asset.url, (gltf) => {
-        // Store value
-        asset.value = gltf;
-        // Set as loaded
-        asset.loaded = true;
-        // Ouput
-        resolve(gltf);
-      });
+      LoaderGTLF.load(asset.url,
+        ( gltf ) => {
+          // Called when the resource is loaded
+          // Store value
+          asset.value = gltf;
+          // Set as loaded
+          asset.loaded = true;
+          // Ouput
+          resolve(gltf);
+        },
+        ( xhr ) => {
+          // Called while loading is progressing
+          debug ? console.log( `${asset.label + ' ' + ( xhr.loaded / xhr.total * 100 )}% loaded` ) : null;
+        },
+        ( error ) => {
+          // Called when loading has errors
+          console.error( 'An error happened', error );
+        },);
     } catch (error) {
       console.error(error);
     }
@@ -32,13 +40,16 @@ var LoadGLTF = (function (asset) {
 
 /* ============================================================= */
 
-class AssetManagerClass {
+class AssetManager {
 
   constructor(params) {
 
     // -------- PARAMETERS -------- //
 
+    var _params = params !== undefined ? params : {};
+
     this.assets = [];
+    this._debug = _params.debug !== undefined ? _params.debug : false;
 
   }
 
@@ -73,7 +84,7 @@ class AssetManagerClass {
         const e = this.assets[i];
         // Call load function according to type
         if (e.type === 'GLTF') {
-          await LoadGLTF(e);
+          await LoadGLTF(e, this._debug);
         }
       }
     }
@@ -112,5 +123,5 @@ class AssetManagerClass {
  * Exports
  */
 export {
-  AssetManagerClass as AssetManager,
+  AssetManager,
 }
